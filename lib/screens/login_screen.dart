@@ -4,6 +4,8 @@ import '../services/data_service.dart';
 import 'signup_screen.dart';
 import 'main_navigation.dart';
 
+/// LoginScreen provides authentication for ALU students.
+/// Uses local storage for credentials since this is a standalone app.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -17,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final DataService _dataService = DataService();
   bool _isLoading = false;
-  bool _obscurePassword = true;
+  bool _obscurePassword = true; // Toggle for password visibility
 
   @override
   void dispose() {
@@ -26,11 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  /// Handles user login by validating credentials against stored student data.
-  /// 
-  /// We use simple email/password matching since this is a local-only app
-  /// without a backend. For a real app, we'd use proper authentication, but
-  /// this approach works for the assignment requirements.
+  /// Validates credentials against locally stored student data.
+  /// Uses simple matching since no backend is required for this app.
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
@@ -39,7 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
         final student = await _dataService.getStudent();
 
         if (student == null) {
-          // No student exists, show error
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -49,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
         } else if (student.email != _emailController.text.trim()) {
-          // Email doesn't match
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -59,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
         } else if (student.password != _passwordController.text) {
-          // Password doesn't match
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -69,7 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
         } else {
-          // Login successful
           if (mounted) {
             Navigator.pushReplacement(
               context,
@@ -107,8 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 60),
-                
-                // Logo placeholder
+
                 Container(
                   width: 80,
                   height: 80,
@@ -122,10 +116,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: ALUColors.accentYellow,
                   ),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
-                // Title
+
                 const Text(
                   'Welcome Back',
                   style: TextStyle(
@@ -135,27 +128,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                
+
                 const SizedBox(height: 8),
-                
+
                 const Text(
                   'Sign in to continue',
-                  style: TextStyle(
-                    color: ALUColors.textGray,
-                    fontSize: 16,
-                  ),
+                  style: TextStyle(color: ALUColors.textGray, fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
-                
+
                 const SizedBox(height: 40),
-                
-                // Email Field
+
                 Container(
                   decoration: BoxDecoration(
                     color: ALUColors.cardBackground,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -189,16 +181,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                
+
                 const SizedBox(height: 16),
-                
-                // Password Field
+
                 Container(
                   decoration: BoxDecoration(
                     color: ALUColors.cardBackground,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -242,10 +236,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                
+
                 const SizedBox(height: 32),
-                
-                // Login Button
+
                 SizedBox(
                   height: 56,
                   child: ElevatedButton(
@@ -257,6 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
+                    // Show loading indicator during authentication to provide feedback
                     child: _isLoading
                         ? const SizedBox(
                             height: 20,
@@ -278,10 +272,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
-                // Sign Up Link
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -315,4 +308,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+class MainNavigation {
+  const MainNavigation();
 }
