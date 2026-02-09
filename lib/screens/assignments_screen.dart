@@ -49,6 +49,8 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
     return _assignments.where((a) => a.type == _selectedFilter).toList();
   }
 
+  //funtion to set colors based on priority color
+
   Color _getPriorityColor(String priority) {
     switch (priority) {
       case "High":
@@ -84,7 +86,8 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
             )
           : Column(
               children: [
-                // Filter Chips
+                // Filter Chips to filter assignments based on assignment type
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Row(
@@ -133,7 +136,7 @@ class _AssignmentScreenState extends State<AssignmentScreen> {
                   ),
                 ),
 
-                // Assignments List
+                // Assignments List ,if nothing is in the list  display nothing
                 Expanded(
                   child: filteredAssignments.isEmpty
                       ? _buildEmptyState()

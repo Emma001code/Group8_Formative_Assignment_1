@@ -17,7 +17,7 @@ class _CreateAssignmentScreenState extends State<CreateAssignmentScreen> {
   final _formKey = GlobalKey<FormState>();
   final DataService _dataService = DataService();
 
-  // Controllers
+  // Controllers to track changes fron inputs fields
   late TextEditingController _titleController;
   late TextEditingController _dueDateController;
 
