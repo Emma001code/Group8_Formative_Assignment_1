@@ -309,7 +309,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-class MainNavigation {
-  const MainNavigation();
-}
